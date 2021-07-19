@@ -11,11 +11,15 @@ The repo is considered immutable any local changes being overwritten by the offi
 A solution is to recreate the package locally, pointing Unity to this local folder instead of the official repo.
 See [this reddit thread](https://www.reddit.com/r/Unity3D/comments/hmbm46/can_i_edit_a_unity_package/?utm_source=amp&utm_medium=&utm_content=post_body) for a rundown of a similar situation and the solution.
 
-**Summing up here:**
-
-1. Open `Packages/manifest.json`.
-2. Change `"com.unity.ide.vscode": "THE_VERSION"` to `"com.unity.ide.vscode": "PATH_TO_PACKAGE"`. Local to *this repo*, the package is located in `Packages/com.unity.ide.vscode`.
-
 
 ## How to import?
 
+I've refactored the actual package to be a git submodule, so you can just include it as such into `Packages`.
+
+```
+git submodule add https://github.com/AntonC9018/com.unity.ide.vscode UNITY_PROJECT_SUBFOLDER/Packages/com.unity.ide.vscode
+```
+
+Unity will handle the rest of the process, modifying your `package-lock.json` accordingly.
+
+Alternatively, you may store the dev repository in a different folder, and point `manifest.json` to that folder, as described in the reddit thread.
