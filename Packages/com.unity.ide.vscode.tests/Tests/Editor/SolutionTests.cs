@@ -99,12 +99,12 @@ namespace VSCodeEditor.Tests
                 var synchronizer = m_Builder.Build();
 
                 Assert.IsFalse(
-                    synchronizer.SyncIfNeeded(new List<string>(), new[] {$"reimport.{reimportedFile}"}),
+                    synchronizer.SyncIfNeeded(new string[0], new string[] {$"reimport.{reimportedFile}"}),
                     "Before sync has been called, we should not allow SyncIfNeeded");
 
                 synchronizer.Sync();
 
-                Assert.That(synchronizer.SyncIfNeeded(new List<string>(), new[] {$"reimport.{reimportedFile}"}));
+                Assert.That(synchronizer.SyncIfNeeded(new string[0], new[] {$"reimport.{reimportedFile}"}));
             }
 
             [Test]
@@ -114,7 +114,7 @@ namespace VSCodeEditor.Tests
 
                 synchronizer.Sync();
 
-                Assert.IsFalse(synchronizer.SyncIfNeeded(new List<string>(), new[] {"ShouldNotSync.txt"}));
+                Assert.IsFalse(synchronizer.SyncIfNeeded(new string[0], new[] {"ShouldNotSync.txt"}));
             }
 
             [Test]
@@ -124,7 +124,7 @@ namespace VSCodeEditor.Tests
 
                 synchronizer.Sync();
 
-                Assert.IsFalse(synchronizer.SyncIfNeeded(new List<string> {" reimport.random"}, new string[0]));
+                Assert.IsFalse(synchronizer.SyncIfNeeded(new string[] {" reimport.random"}, new string[0]));
             }
 
             [Test]
@@ -146,7 +146,7 @@ namespace VSCodeEditor.Tests
                 m_Builder.WithAssemblies(newAssemblies);
                 m_Builder.AssignFilesToAssembly(new[] {"MyFile.cs"}, newAssembly);
 
-                synchronizer.SyncIfNeeded(new List<string> {"MyFile.cs"}, new string[0]);
+                synchronizer.SyncIfNeeded(new string[] {"MyFile.cs"}, new string[0]);
 
                 var solutionFileContent = m_Builder.ReadFile(synchronizer.SolutionFile());
                 StringAssert.Contains(
@@ -166,7 +166,7 @@ namespace VSCodeEditor.Tests
 
                 m_Builder.WithAssetFiles(new[] {"X.cs"});
 
-                var res = synchronizer.SyncIfNeeded(new List<string> {"X.cs"}, new string[0]);
+                var res = synchronizer.SyncIfNeeded(new string[] {"X.cs"}, new string[0]);
 
                 Assert.IsTrue(res, "Should support file extension");
 
@@ -192,7 +192,7 @@ namespace VSCodeEditor.Tests
                         files,
                         new Assembly("", "", files, new string[0], new Assembly[0], new string[0], AssemblyFlags.EditorAssembly));
 
-                var res = synchronizer.SyncIfNeeded(new List<string> {"X.cs"}, new string[0]);
+                var res = synchronizer.SyncIfNeeded(new string[] {"X.cs"}, new string[0]);
 
                 Assert.IsTrue(res, "Should support file extension");
 
@@ -208,12 +208,12 @@ namespace VSCodeEditor.Tests
                 var synchronizer = m_Builder.Build();
 
                 Assert.IsFalse(
-                    synchronizer.SyncIfNeeded(new List<string> {$"reimport.{fileExtension}"}, new string[0]),
+                    synchronizer.SyncIfNeeded(new string[] {$"reimport.{fileExtension}"}, new string[0]),
                     "Before sync has been called, we should not allow SyncIfNeeded");
 
                 synchronizer.Sync();
 
-                Assert.That(synchronizer.SyncIfNeeded(new List<string> {$"reimport.{fileExtension}"}, new string[0]));
+                Assert.That(synchronizer.SyncIfNeeded(new string[] {$"reimport.{fileExtension}"}, new string[0]));
             }
 
             static string[] s_ExtensionsRequireReSync =

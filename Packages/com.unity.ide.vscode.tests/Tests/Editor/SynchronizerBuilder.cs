@@ -51,7 +51,7 @@ namespace VSCodeEditor.Tests
 
         public IGenerator Build()
         {
-            return m_Generator = new ProjectGeneration(projectDirectory, m_AssemblyProvider.Object, m_FileIoMock, m_GUIDGenerator.Object);
+            return m_Generator = new ProjectGeneration(projectDirectory, projectDirectory, m_AssemblyProvider.Object, m_FileIoMock, m_GUIDGenerator.Object);
         }
 
         public SynchronizerBuilder WithSolutionText(string solutionText)

@@ -198,7 +198,7 @@ namespace VSCodeEditor.Tests
                 synchronizer.Sync();
                 var packageAsset = "packageAsset.cs";
                 m_Builder.WithPackageAsset(packageAsset, false);
-                Assert.IsTrue(synchronizer.SyncIfNeeded(new List<string>() { packageAsset }, new string[0]));
+                Assert.IsTrue(synchronizer.SyncIfNeeded(new string[] { packageAsset }, new string[0]));
             }
         }
 
@@ -373,7 +373,7 @@ namespace VSCodeEditor.Tests
                 var synchronizer = m_Builder.Build();
                 synchronizer.Sync();
                 const string newFile = "Newfile.cs";
-                var newFileArray = new List<string> { newFile };
+                var newFileArray = new string[] { newFile };
                 m_Builder.WithAssemblyData(files: m_Builder.Assembly.sourceFiles.Concat(newFileArray).ToArray());
 
                 Assert.True(synchronizer.SyncIfNeeded(newFileArray, new string[0]), "Should sync when file in assembly changes");
@@ -389,7 +389,7 @@ namespace VSCodeEditor.Tests
                 synchronizer.Sync();
                 var filesBefore = m_Builder.Assembly.sourceFiles;
                 const string newFile = "Newfile.cs";
-                var newFiles = new List<string> { newFile };
+                var newFiles = new string[] { newFile };
                 m_Builder.WithAssemblyData(files: newFiles.ToArray());
 
                 Assert.True(synchronizer.SyncIfNeeded(newFiles, new string[0]), "Should sync when file in assembly changes");
@@ -421,7 +421,7 @@ namespace VSCodeEditor.Tests
                 var filesAfter = filesBefore.Skip(1).ToArray();
                 m_Builder.WithAssemblyData(files: filesAfter);
 
-                Assert.True(synchronizer.SyncIfNeeded(filesAfter.ToList(), new string[0]), "Should sync when file in assembly changes");
+                Assert.True(synchronizer.SyncIfNeeded(filesAfter, new string[0]), "Should sync when file in assembly changes");
 
                 var csprojContentAfter = m_Builder.ReadProjectFile(m_Builder.Assembly);
                 StringAssert.Contains(filesAfter[0], csprojContentAfter);
